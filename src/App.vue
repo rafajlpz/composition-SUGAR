@@ -1,26 +1,41 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <TheTitle titulo="Tareas" />
+
+  <FormTask :data="task" />
+
+  <section>
+<h2>Tareas</h2>
+  <ul>
+    <li v-for="(item) in tasks" :key="item.id">
+      ({{item.id}}) - ({{item.id}}) Ratio: {{item.ratio}}
+    </li>
+  </ul>
+  
+
+  </section>
+
+
+  
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+//Forma sugar
+import TheTitle from "./components/TheTitle.vue";
+import FormTask from "./components/FormTask.vue";
+//Cargar la libreria de Vuex
+import { useStore } from "vuex";
+import { computed } from "vue";
+//Utilizamos el store
+const store = useStore();
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const task = computed(() => {
+  return store.state.task;
+});
+
+const tasks = computed(() =>{
+  return store.state.tasks;
+});
+
+
+console.log(task.value)
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
